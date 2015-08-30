@@ -10,36 +10,36 @@ createAudioElem();
 function startTimer(time) {
 	// If timer already running then reset only timeoutId and intervalId
 	if (timer.timeoutId && timer.intervalId) {
-			resetTimerSoft();
-		}
+		resetTimerSoft();
+	}
 
-		setIcon('16timer_enabled');
-		setBadgeColor('#83B8C9');
+	setIcon('16timer_enabled');
+	setBadgeColor('#83B8C9');
+	// saving last timer
+	timer.prevTimer = time;
+	// beggins showing how much time left on browserAction button
+	updateBadge(time);
 
-		timer.prevTimer = time; // To save last used timer
-		// Beggins showing how much time left on browserAction button
-		updateBadge(time);
+	// Runs the timer
+	timer.timeoutId = window.setTimeout(function () {
+		chrome.notifications.create('' + time, {
+			type : 'basic',
+			priority: 2,
+			message: 'coffeeTimer',
+			title : Math.round(time/60000) + 'minutes',
+			iconUrl: 'images/timer_128x128.png'
+		},	function () {
+				turnAudio('on');
+				resetTimer();
+				autoMuteAudio(24);
 
-		// Runs the timer
-		timer.timeoutId = window.setTimeout(function () {
-			chrome.notifications.create('' + time, {
-				type : 'basic',
-				priority: 2,
-				message: 'Timer app',
-				title : Math.round(time/60000) + 'minutes',
-				iconUrl: 'images/timer_128x128.png'
-			},	function () {
-					turnAudio('on');
-					resetTimer();
-					autoMuteAudio(24);
-
-					chrome.notifications.onClicked.addListener(function (id) {
-						chrome.notifications.clear(id, function () {
-							turnAudio('off');
-						});
+				chrome.notifications.onClicked.addListener(function (id) {
+					chrome.notifications.clear(id, function () {
+						turnAudio('off');
 					});
-			});
-		}, time);
+				});
+		});
+	}, time);
 }
 
 
@@ -83,19 +83,16 @@ function formatDate (date) {
 	* @return {[string]}      [formatted string for timer graphical output]
 	*/
 	var d = new Date(date),
-		formattedDate,
 		mins = d.getMinutes(),
-		secs = d.getSeconds();
+		secs = d.getSeconds(),
+		formattedDate;
 	if (secs < 10) secs = '0' + secs;
 	formattedDate = mins + ':' + secs;
 	return formattedDate;
 }
 
 function setIcon (name) {
-	chrome.browserAction.setIcon(
-		{
-				path : 'images/' + name + '.png'
-		},
+	chrome.browserAction.setIcon({ path : 'images/' + name + '.png'},
 		function () {});
 }
 

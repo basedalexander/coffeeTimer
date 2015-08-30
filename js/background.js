@@ -22,23 +22,23 @@ function startTimer(time) {
 
 		// Runs the timer
 		timer.timeoutId = window.setTimeout(function () {
-				chrome.notifications.create('' + time, {
-						type : 'basic',
-						priority: 2,
-						message: 'Timer app',
-						title : Math.round(time/60000) + 'minutes',
-						iconUrl: 'images/timer_128x128.png'
-				},  function () {
-								turnAudio('on');
-								resetTimer();
-								autoMuteAudio(24);
+			chrome.notifications.create('' + time, {
+				type : 'basic',
+				priority: 2,
+				message: 'Timer app',
+				title : Math.round(time/60000) + 'minutes',
+				iconUrl: 'images/timer_128x128.png'
+			},	function () {
+					turnAudio('on');
+					resetTimer();
+					autoMuteAudio(24);
 
-								chrome.notifications.onClicked.addListener(function (id) {
-										chrome.notifications.clear(id, function () {
-												turnAudio('off');
-										});
-								});
-				});
+					chrome.notifications.onClicked.addListener(function (id) {
+						chrome.notifications.clear(id, function () {
+							turnAudio('off');
+						});
+					});
+			});
 		}, time);
 }
 

@@ -1,8 +1,8 @@
 var timer = {
-	prevTimer : null,
-	timeoutId : null,
-	intervalId : null,
-	audio : null,
+	prevTimer 	: null,
+	timeoutId 	: null,
+	intervalId 	: null,
+	audio 			: null,
 };
 
 createAudioElem();
@@ -14,7 +14,7 @@ function startTimer(time) {
 	}
 
 	setIcon('16timer_enabled');
-	setBadgeColor('#83B8C9');
+	setBadgeColor('#845730');
 	// saving last timer
 	timer.prevTimer = time;
 	// beggins showing how much time left on browserAction button
@@ -26,7 +26,7 @@ function startTimer(time) {
 			type : 'basic',
 			priority: 2,
 			message: 'coffeeTimer',
-			title : Math.round(time/60000) + 'minutes',
+			title : Math.round(time/60000) + ' minutes',
 			iconUrl: 'images/timer_128x128.png'
 		},	function () {
 				turnAudio('on');
@@ -112,6 +112,7 @@ function createAudioElem () {
 	timer.audio = document.createElement('AUDIO');
 	timer.audio.setAttribute('loop' , 'true');
 	timer.audio.setAttribute('autoplay', 'true');
+	timer.audio.volume = 0.4;
 	document.body.appendChild(timer.audio);
 }
 

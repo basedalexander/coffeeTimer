@@ -1,0 +1,36 @@
+{
+
+	"name": "coffeeTimer",
+	"version": "1.0",
+	"description": "Timer wich will notify you even if your browser is closed", 
+	"manifest_version": 2,
+
+
+	"browser_action": {
+		"default_icon": "images/16timer_disabled.png",
+		"default_popup": "popup.html",
+		"default_title": "Timer"
+	},
+
+	"background": {
+	    "persistent": true,
+	    "page" : "background.html"
+	},
+
+	"omnibox": { 
+		"keyword" : "t"
+	},
+
+	"icons": {
+	  "16": "images/16timer_enabled.png"
+	},
+
+	"permissions": [
+		"background",
+		"notifications",
+	  	"storage"
+	]
+
+}
+// https://developer.chrome.com/extensions/overview
+// https://developer.chrome.com/extensions/event_pages#registration

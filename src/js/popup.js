@@ -1,29 +1,30 @@
-var bg = chrome.extension.getBackgroundPage();
+'use strict';
 
-(function () {
-  'use strict';
-  var timerButtons = document.querySelectorAll('[data-timer]'),
-    timerReset = document.querySelector('[data-timer-reset]'),
-    timerRepeatLast = document.querySelector('[data-timer-repeat'),
-    i;
+var Router = require('./Router'),
+    router = new Router('frontend');
 
-  for (i = 0; i < timerButtons.length; i = i + 1) {
-    var button = timerButtons[i],
-      time = button.getAttribute('data-timer') * 60000;
-    button.innerHTML = button.getAttribute('data-timer') + ' min';
-    addHandler(button, time);
-  }
+var timerButtons = document.querySelectorAll('[data-timer]'),
+  timerReset = document.querySelector('[data-timer-reset]'),
+  timerRepeatLast = document.querySelector('[data-timer-repeat'),
+  i;
 
-  timerReset.addEventListener('click', function () {
-    bg.resetTimer();
-  });
-  timerRepeatLast.addEventListener('click', function () {
-    bg.startPrevTimer();
-  });
-})();
+for (i = 0; i < timerButtons.length; i = i + 1) {
+  var button = timerButtons[i],
+    time = button.getAttribute('data-timer') * 60000;
+  button.innerHTML = button.getAttribute('data-timer') + ' min';
+  addHandler(button, time);
+}
+
+timerReset.addEventListener('click', function () {
+  router.send('reset');
+});
+timerRepeatLast.addEventListener('click', function () {
+  router.send('repeat');
+});
+
 
 function addHandler(button, time) {
   button.addEventListener('click', function () {
-    bg.startTimer(time);
+    router.send('start', time);
   });
 }

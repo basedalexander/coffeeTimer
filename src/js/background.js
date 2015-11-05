@@ -2,10 +2,8 @@
 
 var Timer = require('./Timer'),
   Router = require('./Router'),
-  router = new Router('backend');
-
-
-var timer = new Timer();
+  router = new Router('backend'),
+  timer = new Timer();
 
 router
   .on('start', function (message) {

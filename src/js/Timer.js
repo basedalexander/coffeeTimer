@@ -23,10 +23,10 @@ var Timer = function () {
     if (isRunning()) {
       clearTimer();
     }
+    badger.startShowingTime(time);
 
     // Save timer
     timer.lastUsed = time;
-    badger.startShowingTime(time);
 
     // Runs the timer
     timer.timeoutId = setTimeout(function () {

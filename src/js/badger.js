@@ -55,9 +55,9 @@ function formatDate(date) {
 
 function startShowingTime (time) {
   var goal = Date.now() + time;
+  printTime(goal);
   enableIcon();
   setBgColor('#845730');
-  printTime(goal);
 
   updateIntervalId = setInterval(function () {
     printTime(goal);

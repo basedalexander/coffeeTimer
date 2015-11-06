@@ -5,9 +5,14 @@
   "description": "Timer wich will notify you even if your browser is closed",
   "manifest_version": 2,
 
+  "icons": {
+    "128": "images/128timer_enabled.png",
+    "16": "images/16timer_enabled.png",
+    "48": "images/48timer_enabled.png"
+  },
 
   "browser_action": {
-    "default_icon": "images/16timer_disabled.png",
+    "default_icon": "images/19timer_disabled.png",
     "default_popup": "popup.html",
     "default_title": "Timer"
   },
@@ -21,9 +26,7 @@
     "keyword": "t"
   },
 
-  "icons": {
-    "16": "images/16timer_enabled.png"
-  },
+
 
   "permissions": [
     "background",

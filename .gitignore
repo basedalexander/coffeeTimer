@@ -2,4 +2,5 @@
 *.sublime-workspace
 .idea
 build/
+/dist/js
 node_modules/

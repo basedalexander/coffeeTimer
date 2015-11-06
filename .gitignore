@@ -1,6 +1,6 @@
 *.sublime-project
 *.sublime-workspace
 .idea
-build/
-/dist/js
+build/js/*
+build/css/*
 node_modules/

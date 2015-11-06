@@ -16,26 +16,50 @@ var buffer = require('vinyl-buffer');
 
 // Setup
 
+var basePaths = {
+  src: 'src/',
+  build: 'build/',
+  dest: 'dest/'
+  };
+
+var paths = {
+  scripts: {
+    src: basePaths.src + 'js/',
+    build: basePaths.build + 'js/',
+    dest: basePaths.dest + 'js/'
+  },
+  styles: {
+    src: basePaths.src + 'css/',
+    build: basePaths.build + 'css/',
+    dest: basePaths.dest + 'css/'
+  }
+};
+
+var appFiles = {
+  scripts: '**/*.js'
+};
+
 var bg = {
   src : ['src/js/background.js'],
   devName: 'background-bundle.js',
+  devDest: 'build/js/',
+  prodName: 'background.js',
   devOpts: {
     entries: ['src/js/background.js'],
     debug: true
-  },
-  devDest: 'dist/js/',
-  prodName: 'background.js'
+  }
 
 };
 
 var popup = {
   src: ['src/js/popup.js'],
   devName: 'popup-bundle.js',
+  devDest: 'build/js/',
+  prodName: 'popup.js',
   devOpts: {
     entries: ['src/js/popup.js'],
     debug: true
-  },
-  devDest: 'dist/js/'
+  }
 };
 
 var browserifyOnError = function (err) {
@@ -75,7 +99,14 @@ gulp.task('browserify-popup', ['lint-src'], function () {
     .pipe(gulp.dest(popup.devDest));
 });
 
+
 // watch
-gulp.task('watch', ['browserify-bg'], function () {
+gulp.task('watch', function () {
   gulp.watch('src/**/*.js', ['lint-src', 'browserify-bg', 'browserify-popup']);
 });
+
+
+// Tasks
+gulp.task('build', ['lint-src', 'browserify-bg', 'browserify-popup']);
+
+gulp.task('default', ['build']);

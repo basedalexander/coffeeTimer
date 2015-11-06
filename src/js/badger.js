@@ -6,14 +6,14 @@ var updateIntervalId;
 
 function enableIcon () {
   chrome.browserAction.setIcon({
-      path: 'images/16timer_enabled.png'
+      path: 'images/19timer_enabled.png'
     },
     function () {});
 }
 
 function disableIcon () {
   chrome.browserAction.setIcon({
-      path: 'images/16timer_disabled.png'
+      path: 'images/19timer_disabled.png'
     },
     function () {});
 }
@@ -44,35 +44,40 @@ function printTime (goal) {
 function formatDate(date) {
   var d = new Date(date),
     mins = d.getMinutes(),
-    secs = d.getSeconds(),
-    formattedDate;
+    secs = d.getSeconds();
   if (secs < 10) {
     secs = '0' + secs;
   }
-  formattedDate = mins + ':' + secs;
-  return formattedDate;
+
+  return mins + ':' + secs;
 }
 
 function startShowingTime (time) {
   var goal = Date.now() + time;
-  printTime(goal);
   enableIcon();
   setBgColor('#845730');
+  printTime(goal);
 
   updateIntervalId = setInterval(function () {
     printTime(goal);
   }, 1000);
+
+}
+
+function reset () {
+  clearInterval(updateIntervalId);
+  updateIntervalId = null;
+  clearText();
 }
 
 function clear () {
-  clearInterval(updateIntervalId);
-  updateIntervalId = null;
+  reset();
   disableIcon();
-  clearText();
 }
 
 
 module.exports = {
   startShowingTime: startShowingTime,
-  clear: clear
+  clear: clear,
+  reset: reset
 };

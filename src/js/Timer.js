@@ -1,18 +1,19 @@
 "use strict";
 
 var Timer = function () {
-  var audio = require('./audio'),
-    badger = require('./badger'),
+  var badger = require('./badger'),
     notify = require('./notify'),
     timer = {
       prevTimer: null,
       timeoutId: null
     };
 
-  function clearTimer () {
+
+  function clear() {
+    notify.hide();
+    badger.reset();
     clearTimeout(timer.timeoutId);
     timer.timeoutId = null;
-    badger.clear();
   }
 
   function isRunning () {
@@ -20,10 +21,9 @@ var Timer = function () {
   }
 
   function start (time) {
-    if (isRunning()) {
-      clearTimer();
+    if (isRunning() || notify.isActive()) {
+      clear();
     }
-    badger.startShowingTime(time);
 
     // Save timer
     timer.lastUsed = time;
@@ -34,11 +34,12 @@ var Timer = function () {
       reset();
     }, time);
 
+    badger.startShowingTime(time);
   }
 
   function reset () {
     badger.clear();
-    clearTimer();
+    clear();
   }
 
   function repeat () {
